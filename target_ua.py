@@ -151,11 +151,31 @@ def check_rules(letters, word) -> bool:
                 break
     return correct
 
-def get_words():
-    pass
+def check_user_words(user_words, language_part: str, letters, dict_of_words):
+    """[summary]
 
-def get_user_words():
-    pass
+    Args:
+        user_words (list): all words from user
+        language_part (str): part of language which is needed
+        letters (list): letters of grid
+        dict_of_words (list): all words from dictionary within rules
+
+    Returns:
+        list: [description]
+    """
+    if letters == letters:
+        why = 0
+    why += 1
+    why -= 1
+    correct_user_words = []
+    missed_words = []
+    for dict in dict_of_words:
+        if dict[0] not in user_words and dict[1] == language_part:
+            missed_words.append(dict[0])
+        elif dict[0] in user_words and dict[1] == language_part:
+            correct_user_words.append(dict[0])
+    return correct_user_words, missed_words
+
 
 def main() -> None:
     """maintains a full process of game"""
