@@ -74,6 +74,83 @@ def display_grid(letters_grid, part) -> None:
     print(grid[:-1])
     print(part)
 
+
+def get_words(file: str, letters):
+    """gets all words from file(1 word per line) that
+    are legit
+
+    Args:
+        f (str): file to get words from
+        letters (list[str]): letters of grid
+
+    Returns:
+        list[tuple(str,str)]: list of words that are with rules
+    """
+    legal_words = []
+    with open(file, "r") as dictionary:
+        for word in dictionary.readlines():
+            stop = word.index(" ") if word[0] != " " else 1
+            part_lang = word[stop + 1 : -1]
+            if "/n" in part_lang or "noun" in part_lang:
+                part_lang = "noun"
+            elif "/v" in part_lang or "verb" in part_lang:
+                part_lang = "verb"
+            elif "/adj" in part_lang or "adj" in part_lang:
+                part_lang = "adjective"
+            elif "adv" in part_lang:
+                part_lang = "adverb"
+            if (
+                check_rules(letters, word[:stop])
+                and word[:stop].lower() not in legal_words
+            ):
+                legal_words.append((word[:stop].lower(), part_lang))
+    for word in legal_words:
+        if word[0] == "":
+            legal_words.remove(word)
+    return legal_words
+
+
+def count_appearances(word: str):
+    """Checks how many appearance of each letter in word
+
+    Args:
+        word (str): word to check
+
+    Returns:
+        list[tuple]: list of tuples('letter', appearances)
+    """
+    counter_letter = []
+    word = word.lower()
+    for i in range(len(word)):
+        if i == 0:
+            counter_letter.append((word[i], word.count(word[i])))
+        elif word[i] not in word[:i] and i != 0:
+            counter_letter.append((word[i], word.count(word[i])))
+    return counter_letter
+
+
+def check_rules(letters, word) -> bool:
+    """checks whether word is legit due to rules of target game
+
+    Args:
+        letters (list[str]): letters of grid
+        word ([type]): word to check for correctness
+
+    Returns:
+        bool: correctness of wor according to rules
+    """
+    correct = False
+    if len(word) <= 5 and letters[4] in word.lower():
+        correct = True
+        count_word = count_appearances(word.lower())
+        for appearance in count_word:
+            if appearance[0] not in letters or appearance[1] > letters.count(
+                appearance[0]
+            ):
+                correct = False
+                break
+    return correct
+
 def get_words():
     pass
 
