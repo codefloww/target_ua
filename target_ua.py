@@ -151,6 +151,7 @@ def check_rules(letters, word) -> bool:
                 break
     return correct
 
+
 def check_user_words(user_words, language_part: str, letters, dict_of_words):
     """[summary]
 
@@ -175,6 +176,39 @@ def check_user_words(user_words, language_part: str, letters, dict_of_words):
         elif dict[0] in user_words and dict[1] == language_part:
             correct_user_words.append(dict[0])
     return correct_user_words, missed_words
+
+
+def get_user_words():
+    """gets user words(1 per enter) until '' not entered
+
+    Returns:
+        list[str]: list of words from user
+    """
+    user_words = []
+    word = "hi"
+    print("Try to find some words)")
+    while word != "":
+        word = input()
+        user_words.append(word)
+    return user_words[:-1]
+
+
+def results(correct_words, missed_words, file: str):
+    """prints result of game to user and saves result in results.txt
+
+    Args:
+        words (list[str]): words from user
+        legal_words (list[str]): words from dictionary that are legit
+        pure_words (list[str]): words that legit to rules but not in dictionary
+        file (str): file to save results to(will be created if don't exist)
+
+    Returns:
+        str: 5-line of results in results.txt
+    """
+    score = len(correct_words)
+    print("Your score:" + str(score))
+    print("Correct words:\n", correct_words)
+    print("You missed:\n", missed_words)
 
 
 def main() -> None:
