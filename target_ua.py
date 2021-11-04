@@ -15,41 +15,9 @@ def generate_grid():
     >>> type(generate_grid())
     <class 'list'>
     """
-    alphabet = [
-        "а",
-        "б",
-        "в",
-        "г",
-        "ґ",
-        "д",
-        "е",
-        "є",
-        "ж",
-        "з",
-        "и",
-        "і",
-        "ї",
-        "й",
-        "к",
-        "л",
-        "м",
-        "н",
-        "о",
-        "п",
-        "р",
-        "с",
-        "т",
-        "у",
-        "ф",
-        "х",
-        "ц",
-        "ч",
-        "ш",
-        "щ",
-        "ь",
-        "ю",
-        "я",
-    ]
+    alphabet = ['а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н',\
+               'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ю',\
+               'я', 'є', 'і', 'ї', 'ґ']
     letters_grid = [alphabet[random.randint(0, 32)] for _ in range(5)]
     # check whether 5 different letters appear in grid
     unique = ""
@@ -217,7 +185,7 @@ def main() -> None:
     language_part = random.choice(["noun", "verb", "adjective", "adverb"])
     display_grid(grid, language_part)
     letters = [grid[i][j] for i in range(len(grid)) for j in range(len(grid[i]))]
-    legal_words = get_words("base.lst", letters)
+    legal_words = get_words("target_ua/base.lst", letters)
     user_words = get_user_words()
     correct_words, missed_words = check_user_words(
         user_words, language_part, letters, legal_words
@@ -227,6 +195,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     import doctest
-
     print(doctest.testmod())
     main()
